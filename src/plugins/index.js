@@ -1,5 +1,5 @@
-const withNavigationSdkAndroid = require('./withApiKeyAndroid');
-const withNavigationSdkIos = require('./withApiKeyIos');
+const withApiKeyAndroid = require('./withApiKeyAndroid');
+const withApiKeyIos = require('./withApiKeyIos');
 const withCoreLibraryDesugaring = require('./withCoreLibraryDesugaring');
 const withJetifier = require('./withJetifier');
 
@@ -23,8 +23,8 @@ const withJetifier = require('./withJetifier');
  *   - ios.config.googleMapsApiKey       (iOS)
  */
 const withNavigationSdk = (config, options = {}) => {
-  config = withNavigationSdkAndroid(config, options);
-  config = withNavigationSdkIos(config, options);
+  config = withApiKeyAndroid(config, options);
+  config = withApiKeyIos(config, options);
   config = withCoreLibraryDesugaring(config);
   config = withJetifier(config);
   return config;
