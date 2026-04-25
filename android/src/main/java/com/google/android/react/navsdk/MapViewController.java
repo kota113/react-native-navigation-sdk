@@ -787,7 +787,15 @@ public class MapViewController implements INavigationViewControllerProperties {
       return;
     }
 
-    LatLng latLng = ObjectTranslationUtil.getLatLngFromMap((Map<String, Object>) map.get("target"));
+    Object targetObj = map.get("target");
+    if (targetObj == null) {
+      return;
+    }
+
+    LatLng latLng = ObjectTranslationUtil.getLatLngFromMap((Map<String, Object>) targetObj);
+    if (latLng == null) {
+      return;
+    }
 
     float zoom = (float) CollectionUtil.getDouble("zoom", map, 0);
     float tilt = (float) CollectionUtil.getDouble("tilt", map, 0);
@@ -800,25 +808,35 @@ public class MapViewController implements INavigationViewControllerProperties {
   }
 
   public void animateCamera(Map<String, Object> map) {
-    if (mGoogleMap != null) {
-      int zoom = CollectionUtil.getInt("zoom", map, 0);
-      int tilt = CollectionUtil.getInt("tilt", map, 0);
-      int bearing = CollectionUtil.getInt("bearing", map, 0);
-      int animationDuration = CollectionUtil.getInt("duration", map, 0);
-
-      CameraPosition cameraPosition =
-          new CameraPosition.Builder()
-              .target(
-                  ObjectTranslationUtil.getLatLngFromMap(
-                      (Map<String, Object>) map.get("target"))) // Set the target location
-              .zoom(zoom) // Set the desired zoom level
-              .tilt(tilt) // Set the desired tilt angle (0 for straight down, 90 for straight up)
-              .bearing(bearing) // Set the desired bearing (rotation angle in degrees)
-              .build();
-
-      mGoogleMap.animateCamera(
-          CameraUpdateFactory.newCameraPosition(cameraPosition), animationDuration, null);
+    if (mGoogleMap == null) {
+      return;
     }
+
+    Object targetObj = map.get("target");
+    if (targetObj == null) {
+      return;
+    }
+
+    LatLng latLng = ObjectTranslationUtil.getLatLngFromMap((Map<String, Object>) targetObj);
+    if (latLng == null) {
+      return;
+    }
+
+    int zoom = CollectionUtil.getInt("zoom", map, 0);
+    int tilt = CollectionUtil.getInt("tilt", map, 0);
+    int bearing = CollectionUtil.getInt("bearing", map, 0);
+    int animationDuration = CollectionUtil.getInt("duration", map, 0);
+
+    CameraPosition cameraPosition =
+        new CameraPosition.Builder()
+            .target(latLng)
+            .zoom(zoom) // Set the desired zoom level
+            .tilt(tilt) // Set the desired tilt angle (0 for straight down, 90 for straight up)
+            .bearing(bearing) // Set the desired bearing (rotation angle in degrees)
+            .build();
+
+    mGoogleMap.animateCamera(
+        CameraUpdateFactory.newCameraPosition(cameraPosition), animationDuration, null);
   }
 
   public void setZoomLevel(int level) {

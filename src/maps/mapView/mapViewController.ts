@@ -195,6 +195,10 @@ export const getMapViewController = (nativeID: string): MapViewController => {
       return await NavViewModule.moveCamera(nativeID, cameraPosition);
     },
 
+    animateCamera: async (cameraPosition: CameraPosition, duration?: number) => {
+      return await NavViewModule.animateCamera(nativeID, cameraPosition, duration);
+    },
+
     setPadding: async _padding => {
       console.warn('setPadding should be set via props in new architecture');
     },
