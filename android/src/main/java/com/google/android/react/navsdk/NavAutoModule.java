@@ -613,6 +613,22 @@ public class NavAutoModule extends NativeNavAutoModuleSpec
   }
 
   @Override
+  public void animateCamera(ReadableMap cameraPosition, double duration, final Promise promise) {
+    UiThreadUtil.runOnUiThread(
+        () -> {
+          if (mMapViewController == null) {
+            promise.reject(JsErrors.NO_MAP_ERROR_CODE, JsErrors.NO_MAP_ERROR_MESSAGE);
+            return;
+          }
+
+          Map<String, Object> map = cameraPosition.toHashMap();
+          map.put("duration", (int) duration);
+          mMapViewController.animateCamera(map);
+          promise.resolve(null);
+        });
+  }
+
+  @Override
   public void isAutoScreenAvailable(final Promise promise) {
     promise.resolve(mMapViewController != null);
   }
