@@ -459,8 +459,10 @@ static NavAutoModuleReadyCallback _navAutoModuleReadyCallback;
       }
 
       GMSCameraUpdate *update = [GMSCameraUpdate setCamera:position];
-      [self->_viewController animateCamera:update];
-      resolve(nil);
+      [self->_viewController animateCamera:update
+                                    result:^(BOOL success) {
+                                      resolve(@(success));
+                                    }];
     });
   } else {
     reject(@"NO_VIEW_CONTROLLER", @"No view controller found", nil);
