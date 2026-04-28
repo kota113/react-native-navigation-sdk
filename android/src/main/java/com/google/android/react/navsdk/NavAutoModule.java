@@ -613,7 +613,8 @@ public class NavAutoModule extends NativeNavAutoModuleSpec
   }
 
   @Override
-  public void animateCamera(ReadableMap cameraPosition, double duration, final Promise promise) {
+  public void animateCamera(
+      ReadableMap cameraPosition, @Nullable Double duration, final Promise promise) {
     UiThreadUtil.runOnUiThread(
         () -> {
           if (mMapViewController == null) {
@@ -622,7 +623,7 @@ public class NavAutoModule extends NativeNavAutoModuleSpec
           }
 
           Map<String, Object> map = cameraPosition.toHashMap();
-          map.put("duration", (int) duration);
+          map.put("duration", duration != null ? duration.intValue() : 0);
           mMapViewController.animateCamera(map);
           promise.resolve(null);
         });

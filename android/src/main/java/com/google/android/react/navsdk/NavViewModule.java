@@ -14,6 +14,7 @@
 package com.google.android.react.navsdk;
 
 import android.location.Location;
+import androidx.annotation.Nullable;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -263,7 +264,10 @@ public class NavViewModule extends NativeNavViewModuleSpec {
 
   @Override
   public void animateCamera(
-      String nativeID, ReadableMap cameraPosition, double duration, final Promise promise) {
+      String nativeID,
+      ReadableMap cameraPosition,
+      @Nullable Double duration,
+      final Promise promise) {
     UiThreadUtil.runOnUiThread(
         () -> {
           IMapViewFragment fragment = mNavViewManager.getFragmentByNativeId(nativeID);
@@ -273,7 +277,7 @@ public class NavViewModule extends NativeNavViewModuleSpec {
           }
 
           Map<String, Object> map = cameraPosition.toHashMap();
-          map.put("duration", (int) duration);
+          map.put("duration", duration != null ? duration.intValue() : 0);
           fragment.getMapController().animateCamera(map);
           promise.resolve(null);
         });
