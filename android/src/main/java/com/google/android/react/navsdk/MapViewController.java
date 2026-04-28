@@ -835,8 +835,12 @@ public class MapViewController implements INavigationViewControllerProperties {
             .bearing(bearing) // Set the desired bearing (rotation angle in degrees)
             .build();
 
-    mGoogleMap.animateCamera(
-        CameraUpdateFactory.newCameraPosition(cameraPosition), animationDuration, null);
+    if (animationDuration > 0) {
+      mGoogleMap.animateCamera(
+          CameraUpdateFactory.newCameraPosition(cameraPosition), animationDuration, null);
+    } else {
+      mGoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
   }
 
   public void setZoomLevel(int level) {
