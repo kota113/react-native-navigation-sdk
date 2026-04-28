@@ -367,7 +367,20 @@ export const useNavigationAuto = (): UseNavigationAutoResult => {
       },
 
       moveCamera: (cameraPosition: CameraPosition) => {
-        return NavAutoModule.moveCamera(cameraPosition);
+        return NavAutoModule.moveCamera({
+          ...cameraPosition,
+          zoom: cameraPosition.zoom ?? 15,
+        });
+      },
+
+      animateCamera: (cameraPosition: CameraPosition, duration?: number) => {
+        return NavAutoModule.animateCamera(
+          {
+            ...cameraPosition,
+            zoom: cameraPosition.zoom ?? 15,
+          },
+          duration
+        );
       },
 
       setPadding: (padding: Padding) => {

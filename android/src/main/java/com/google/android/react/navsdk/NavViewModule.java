@@ -262,6 +262,24 @@ public class NavViewModule extends NativeNavViewModuleSpec {
   }
 
   @Override
+  public void animateCamera(
+      String nativeID, ReadableMap cameraPosition, double duration, final Promise promise) {
+    UiThreadUtil.runOnUiThread(
+        () -> {
+          IMapViewFragment fragment = mNavViewManager.getFragmentByNativeId(nativeID);
+          if (fragment == null) {
+            promise.reject(JsErrors.NO_MAP_ERROR_CODE, JsErrors.NO_MAP_ERROR_MESSAGE);
+            return;
+          }
+
+          Map<String, Object> map = cameraPosition.toHashMap();
+          map.put("duration", (int) duration);
+          fragment.getMapController().animateCamera(map);
+          promise.resolve(null);
+        });
+  }
+
+  @Override
   public void showRouteOverview(String nativeID, final Promise promise) {
     UiThreadUtil.runOnUiThread(
         () -> {
