@@ -623,7 +623,7 @@ public class NavAutoModule extends NativeNavAutoModuleSpec
           }
 
           Map<String, Object> map = cameraPosition.toHashMap();
-          map.put("duration", duration != null ? duration.intValue() : 0);
+          map.put("duration", duration != null ? duration.doubleValue() : 0.0);
           mMapViewController.animateCamera(map);
           promise.resolve(null);
         });

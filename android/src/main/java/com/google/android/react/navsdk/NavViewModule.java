@@ -277,7 +277,7 @@ public class NavViewModule extends NativeNavViewModuleSpec {
           }
 
           Map<String, Object> map = cameraPosition.toHashMap();
-          map.put("duration", duration != null ? duration.intValue() : 0);
+          map.put("duration", duration != null ? duration.doubleValue() : 0.0);
           fragment.getMapController().animateCamera(map);
           promise.resolve(null);
         });
