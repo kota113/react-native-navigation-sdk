@@ -432,7 +432,9 @@ static NavViewModule *sharedInstance = nil;
       int durationMs = (int)duration;
       [viewController animateCamera:update
                              result:^(BOOL success) {
-                               resolve(@(success));
+                               if (resolve) {
+                                 resolve(@(success));
+                               }
                              }];
       (void)durationMs;
     });
