@@ -969,7 +969,7 @@
 }
 
 - (void)animateCamera:(GMSCameraUpdate *)update result:(OnBooleanResult)completionBlock {
-  if (_mapView == nil) {
+  if (_mapView == nil || update == nil) {
     if (completionBlock) {
       completionBlock(NO);
     }
