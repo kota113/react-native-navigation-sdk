@@ -459,6 +459,7 @@ static NavAutoModuleReadyCallback _navAutoModuleReadyCallback;
       }
 
       [self->_viewController animateCameraToPosition:position
+                                            duration:duration
                                               result:^(BOOL success) {
                                                 resolve(@(success));
                                               }];
