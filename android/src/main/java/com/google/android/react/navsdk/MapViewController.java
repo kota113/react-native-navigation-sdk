@@ -787,7 +787,15 @@ public class MapViewController implements INavigationViewControllerProperties {
       return;
     }
 
-    LatLng latLng = ObjectTranslationUtil.getLatLngFromMap((Map<String, Object>) map.get("target"));
+    Object targetObj = map.get("target");
+    if (targetObj == null) {
+      return;
+    }
+
+    LatLng latLng = ObjectTranslationUtil.getLatLngFromMap((Map<String, Object>) targetObj);
+    if (latLng == null) {
+      return;
+    }
 
     float zoom = (float) CollectionUtil.getDouble("zoom", map, 0);
     float tilt = (float) CollectionUtil.getDouble("tilt", map, 0);
