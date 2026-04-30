@@ -458,11 +458,11 @@ static NavAutoModuleReadyCallback _navAutoModuleReadyCallback;
         position.viewingAngle = positionCopy.tilt().value();
       }
 
-      GMSCameraUpdate *update = [GMSCameraUpdate setCamera:position];
-      [self->_viewController animateCamera:update
-                                    result:^(BOOL success) {
-                                      resolve(@(success));
-                                    }];
+      [self->_viewController animateCameraToPosition:position
+                                            duration:duration
+                                              result:^(BOOL success) {
+                                                resolve(@(success));
+                                              }];
     });
   } else {
     reject(@"NO_VIEW_CONTROLLER", @"No view controller found", nil);
