@@ -428,15 +428,13 @@ static NavViewModule *sharedInstance = nil;
         position.viewingAngle = positionCopy.tilt().value();
       }
 
-      GMSCameraUpdate *update = [GMSCameraUpdate setCamera:position];
-      int durationMs = (int)duration;
-      [viewController animateCamera:update
-                             result:^(BOOL success) {
-                               if (resolve) {
-                                 resolve(@(success));
-                               }
-                             }];
-      (void)durationMs;
+      [viewController animateCameraToPosition:position
+                                     duration:duration
+                                       result:^(BOOL success) {
+                                         if (resolve) {
+                                           resolve(@(success));
+                                         }
+                                       }];
     });
   } else {
     reject(@"NO_VIEW_CONTROLLER", @"No view controller found for the specified nativeID", nil);
