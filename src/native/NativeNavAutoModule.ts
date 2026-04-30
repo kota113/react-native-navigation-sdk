@@ -138,6 +138,10 @@ export interface Spec extends TurboModule {
   addPolygon(options: PolygonOptionsSpec): Promise<Polygon>;
   addGroundOverlay(options: GroundOverlayOptionsSpec): Promise<GroundOverlay>;
   moveCamera(cameraPosition: CameraPositionSpec): Promise<void>;
+  animateCamera(
+    cameraPosition: CameraPositionSpec,
+    duration?: WithDefault<Double, null>
+  ): Promise<void>;
   removeMarker(id: string): Promise<boolean>;
   removePolyline(id: string): Promise<boolean>;
   removePolygon(id: string): Promise<boolean>;
