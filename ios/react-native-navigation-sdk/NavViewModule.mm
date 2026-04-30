@@ -429,7 +429,6 @@ static NavViewModule *sharedInstance = nil;
       }
 
       [viewController animateCameraToPosition:position
-                                     duration:duration
                                        result:^(BOOL success) {
                                          if (resolve) {
                                            resolve(@(success));

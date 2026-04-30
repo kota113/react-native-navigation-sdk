@@ -16,7 +16,6 @@
 
 #import "NavViewController.h"
 #import <GoogleNavigation/GoogleNavigation.h>
-#import <QuartzCore/QuartzCore.h>
 #import <React/RCTLog.h>
 #import <UserNotifications/UserNotifications.h>
 #import "CustomTypes.h"
@@ -983,7 +982,6 @@
 }
 
 - (void)animateCameraToPosition:(GMSCameraPosition *)position
-                       duration:(double)duration
                          result:(OnBooleanResult)completionBlock {
   if (_mapView == nil || position == nil) {
     if (completionBlock) {
@@ -992,11 +990,7 @@
     return;
   }
 
-  double durationMs = duration > 0 ? duration : 500;
-  [CATransaction begin];
-  [CATransaction setAnimationDuration:durationMs / 1000.0];
   [_mapView animateToCameraPosition:position];
-  [CATransaction commit];
 
   if (completionBlock) {
     completionBlock(YES);
